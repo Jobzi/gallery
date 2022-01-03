@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
 
 const Context = createContext({})
 
 export const UserContext = ({ children }) => {
   const [user, setUser] = useState(null)
   const [session, setSession] = useState(null)
+
   useEffect(() => {
     const session = supabase.auth.session()
     setSession(session)
@@ -21,9 +23,9 @@ export const UserContext = ({ children }) => {
   }, [])
 
   return (
-        <Context.Provider value={{}}>
-            {children}
-        </Context.Provider>
+    <Context.Provider value={{ user, setUser, session, setSession }}>
+      {children}
+    </Context.Provider>
   )
 }
 

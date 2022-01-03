@@ -3,7 +3,6 @@ export default function Dashboard () {
     <>
         <div className="bg-slate-100 m-6 p-6 rounded-md">
             <h1>Cover</h1>
-            <divider/>
             <div className="m-5 p-5 border-dashed border-2 border-red-200 hover:border-red-500  rounded-md flex items-center justify-center bg-white">
                 <h1 className="text-red-300 text-xs"> + Add cover</h1>
             </div>
