@@ -1,10 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import { Footer } from '../components/Footer'
 import { Polaroid } from '../components/Polaroid'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home () {
   return (
     <div className={styles.container}>
       <section className='grid place-items-center h-screen'>
@@ -15,7 +13,7 @@ export default function Home() {
             </h1>
             <button className='mt-8 p-4 bg-red-400 text-white font-bold rounded-md shadow-md hover:bg-red-300'>Lets start to share experience</button>
           </div>
-          <Polaroid src={"https://image.ibb.co/mmyvrc/anniversary_balloons_birthday_68369.jpg"} alt={"img 1"}/>
+          <Polaroid src={'https://image.ibb.co/mmyvrc/anniversary_balloons_birthday_68369.jpg'} alt={'img 1'}/>
         </div>
       </section>
       <section className='grid place-items-center mt-4 mb-5'>
@@ -23,15 +21,15 @@ export default function Home() {
           <h2 className='text-3xl mb-5 space-x-3 tracking-wide font-licorice'>&quot;life is a journey, and we are the people who are on it.&quot;</h2>
           <p className='text-xl'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed nisi ut ipsum lacinia posuere. Mauris efficitur ut velit sed congue. Etiam nisi dolor, egestas at sagittis sit amet, tristique a diam. Aenean interdum lacus turpis, at malesuada tellus varius vel. Maecenas at consectetur odio. Fusce viverra enim et lorem fermentum volutpat. Pellentesque at erat nunc. Phasellus eget gravida magna. Nunc porta eu odio ut ornare.
-Sed accumsan sodales lectus. Aenean sodales vel mauris elementum tempus. 
+Sed accumsan sodales lectus. Aenean sodales vel mauris elementum tempus.
           </p>
         </div>
       </section>
       <section className='grid place-items-center mt-4 mb-5'>
         <div className='flex flex-wrap'>
-          <Polaroid  src={"https://image.ibb.co/b8UJBc/administration_architecture_big_ben_221166.jpg"} alt={"img 1"} width={'30'}/>
-          <Polaroid  src={"https://image.ibb.co/crFarc/pexels_photo_100756.jpg"} alt={"img 1"} width={'30'}/>
-          <Polaroid  src={"https://image.ibb.co/hQaarc/antique_blur_camera_828378.jpg"} alt={"img 1"} width={'30'}/>
+          <Polaroid src={'https://image.ibb.co/b8UJBc/administration_architecture_big_ben_221166.jpg'} alt={'img 1'} width={'30'}/>
+          <Polaroid src={'https://image.ibb.co/crFarc/pexels_photo_100756.jpg'} alt={'img 1'} width={'30'}/>
+          <Polaroid src={'https://image.ibb.co/hQaarc/antique_blur_camera_828378.jpg'} alt={'img 1'} width={'30'}/>
         </div>
       </section>
       <Footer/>

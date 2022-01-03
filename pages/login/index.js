@@ -1,8 +1,30 @@
-export default function Login(){
-  const handleSubmit = (e) => {
-    e.preventDefault();
+import React, { useState } from 'react'
+import { supabase } from '../../lib/supabaseClient'
+
+export default function Login () {
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+
+  const handleLogin = async (email) => {
+    try {
+      setLoading(true)
+      const { error } = await supabase.auth.signIn({ email })
+      if (error) throw error
+      alert('Check your email for the login link!')
+    } catch (error) {
+      alert(error.error_description || error.message)
+    } finally {
+      setLoading(false)
+    }
   }
-    return(
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(email)
+    handleLogin(email)
+    // handleLogin()
+  }
+  return (
       <div className="grid place-items-center h-screen">
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <form className="bg-white" onSubmit={handleSubmit}>
@@ -22,7 +44,14 @@ export default function Login(){
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                   d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
               </svg>
-              <input className="pl-2 outline-none border-none" type="text" name="" id="" placeholder="Email Address" />
+              <input
+                className="pl-2 outline-none border-none"
+                type="text"
+                placeholder="Email Address"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
@@ -38,5 +67,5 @@ export default function Login(){
           </form>
         </div>
       </div>
-    )
+  )
 }

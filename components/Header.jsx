@@ -1,8 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import Link from 'next/link'
 
-export function Header(){
-    return (
+export function Header () {
+  return (
         <nav className="bg-white dark:bg-gray-700 m-2 border rounded-lg">
             <div className="container p-2 mx-auto">
                 <div className="flex items-center justify-between text-gray-600 capitalize dark:text-gray-300">
@@ -23,5 +22,5 @@ export function Header(){
                 </div>
             </div>
         </nav>
-    )
+  )
 }

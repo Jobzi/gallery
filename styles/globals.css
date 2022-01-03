@@ -4,12 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --app-background-color: #fefefe;
+  --app-background-secondary-color: #fafafa;
+  --app-border-color: #000;
+  --app-shadow-color: #d2effd;
+  --app-selection-color: #6cd0ff;
+  --app-background:
+    radial-gradient(#f3cdff 1px, transparent 0),
+    radial-gradient(#fbcdff 1px,#fefefe 0);
+
+  --text-base-color: #000;
+  --text-secondary-color: #333;
+  --text-title-color: #011440;
+  --text-subtitle-color: #001e63;
+  --text-small-color: #555;
+  --graph-fill-color: #00adcc;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  background-color: var(--app-background-color);
+  background-image: var(--app-background);
+  background-size: 40px 40px;
+  background-position: 0 0,20px 20px;
+  color: var(--text-base-color);
 }
 
 a {
@@ -19,4 +45,9 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+::selection{
+  background-color: rgba(10, 228, 173, 0.61);
+  color: #fff;
 }
