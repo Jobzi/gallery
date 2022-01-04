@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Header } from '../../components/Header'
 import { useUser } from '../../hooks/useUser'
 export default function Login () {
   const [email, setEmail] = useState('')
@@ -12,6 +13,8 @@ export default function Login () {
   }
 
   return (
+    <>
+    <Header />
       <div className="grid place-items-center h-screen">
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <div>
@@ -72,5 +75,6 @@ export default function Login () {
           </div>
         </div>
       </div>
+    </>
   )
 }

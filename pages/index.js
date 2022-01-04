@@ -1,9 +1,12 @@
 import { Footer } from '../components/Footer'
+import { Header } from '../components/Header'
 import { Polaroid } from '../components/Polaroid'
 import styles from '../styles/Home.module.css'
 
 export default function Home () {
   return (
+  <>
+    <Header/>
     <div className={styles.container}>
       <section className='grid place-items-center h-screen'>
         <div className='flex flex-wrap'>
@@ -25,14 +28,8 @@ Sed accumsan sodales lectus. Aenean sodales vel mauris elementum tempus.
           </p>
         </div>
       </section>
-      <section className='grid place-items-center mt-4 mb-5'>
-        <div className='flex flex-wrap'>
-          <Polaroid src={'https://image.ibb.co/b8UJBc/administration_architecture_big_ben_221166.jpg'} alt={'img 1'} width={'30'}/>
-          <Polaroid src={'https://image.ibb.co/crFarc/pexels_photo_100756.jpg'} alt={'img 1'} width={'30'}/>
-          <Polaroid src={'https://image.ibb.co/hQaarc/antique_blur_camera_828378.jpg'} alt={'img 1'} width={'30'}/>
-        </div>
-      </section>
       <Footer/>
     </div>
+  </>
   )
 }

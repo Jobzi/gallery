@@ -18,6 +18,9 @@ export function Header () {
                         <Link href='/dashboard'>
                             <a className="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6 lowercase ">{user?.email}</a>
                         </Link> }
+                    <Link href='/gallery'>
+                        <a className="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6">Demo</a>
+                    </Link>
                 </div>
                 {user
                   ? <a
