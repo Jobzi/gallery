@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { Polaroid } from '../components/Polaroid'
@@ -6,6 +7,9 @@ import styles from '../styles/Home.module.css'
 export default function Home () {
   return (
   <>
+    <Head>
+        <title>YawGallery | Home</title>
+    </Head>
     <Header/>
     <div className={styles.container}>
       <section className='grid place-items-center h-screen'>

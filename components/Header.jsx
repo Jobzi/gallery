@@ -4,7 +4,7 @@ import { useUser } from '../hooks/useUser'
 export function Header () {
   const { user, handleSignOut } = useUser()
   return (
-    <nav className="bg-white dark:bg-gray-700 m-2 border rounded-lg">
+    <nav className="bg-white dark:bg-gray-700 m-4 border rounded-lg">
         <div className="container p-2 mx-auto">
             <div className="flex items-center justify-between text-gray-600 capitalize dark:text-gray-300">
                 <Link href='/'>

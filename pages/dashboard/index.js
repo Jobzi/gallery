@@ -1,8 +1,12 @@
+import Head from 'next/head'
 import { Header } from '../../components/Header'
 
 export default function Dashboard () {
   return (
     <>
+        <Head>
+            <title>YawGallery | Dashboard</title>
+        </Head>
         <Header />
         <div className="bg-slate-100 m-6 p-6 rounded-md">
             <h1>Cover</h1>
