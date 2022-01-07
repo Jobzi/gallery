@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { Polaroid } from '../../components/Polaroid'
@@ -8,7 +10,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json()).then(({ data }) =>
 export default function ShareGallery () {
   const router = useRouter()
   const { id } = router.query
-  const { data, error } = useSWR(`/api/gallery/${id}`, fetcher)
+  const { data } = useSWR(`/api/gallery/${id}`, fetcher)
 
   // const [gallery, setGallery] = useState(null)
   // useEffect(() => {
@@ -21,22 +23,16 @@ export default function ShareGallery () {
   //   }
   // }, [id])
 
-  if (error) {
-    return <div>Error</div>
-  }
-  const handleHome = () => {
-    router.push('/')
-  }
-
   return (
     <>
       <Head>
         <title>YawGallery | Wish</title>
       </Head>
-      <button
-        className="rounded-lg bg-slate-400 text-white p-2 ml-4 absolute top-5 hover:bg-slate-300 hover:-translate-x-1"
-        onClick={handleHome}
-        >Home</button>
+      <Link href='/' >
+        <div className='p-2 ml-4 absolute top-5'>
+          <Image className='hover:scale-105 ' src="/wish.svg" alt="Vercel Logo" width={40} height={40}/>
+        </div>
+      </Link>
       <div className='mt-8 flex items-center justify-center'>
           <h1
           className='text-4xl font-bold  text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-purple-300  font-licorice text-center'

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { useUser } from '../hooks/useUser'
 
@@ -8,7 +9,9 @@ export function Header () {
         <div className="container p-2 mx-auto">
             <div className="flex items-center justify-between text-gray-600 capitalize dark:text-gray-300">
                 <Link href='/'>
-                    <a className="text-gray-800 dark:text-gray-200 border-b-2 mx-1.5 sm:mx-6">Icon</a>
+                    <div>
+                        <Image className='hover:scale-105' src="/wish.svg" alt="Vercel Logo" width={50} height={50} />
+                    </div>
                 </Link>
                 <div>
                     <Link href='/'>

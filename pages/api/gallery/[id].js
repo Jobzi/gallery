@@ -11,6 +11,6 @@ export default async function handler (req, res) {
 }
 
 const getSingleGallery = async (id) => {
-  const { data, error } = await supabase.from('gallery').select('*').single()
+  const { data, error } = await supabase.from('gallery').select('*').eq('id', id).single()
   return { data, error }
 }
