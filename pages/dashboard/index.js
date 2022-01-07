@@ -6,6 +6,7 @@ import ImageToUpload from '../../components/ImageUpload'
 export default function Dashboard () {
   const [selectedFile, setSelectedFile] = useState()
   const [images, setImages] = useState([])
+  // eslint-disable-next-line no-unused-vars
   const [preview, setPreview] = useState()
 
   // create a preview as a side effect, whenever selected file is changed
@@ -80,10 +81,10 @@ export default function Dashboard () {
                 name='file'
                 multiple={false}
                 onChange={onSelectFile} />
-                <div className='flex flex-wrap'>
+                <div className='flex flex-wrap align-baseline'>
                   {images.map((image, index) => {
                     return <ImageToUpload key={index} src={URL.createObjectURL(image)}/>
-                  })}
+                  }).reverse()}
                 </div>
             </div>
         </div>
