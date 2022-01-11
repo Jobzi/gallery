@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Header } from '../../components/Header'
 import { Polaroid } from '../../components/Polaroid'
 
 export default function Gallery () {
@@ -8,7 +7,6 @@ export default function Gallery () {
     <Head>
         <title>YawGallery | Demo</title>
     </Head>
-    <Header />
       <div className='flex items-center justify-center'>
         {/* <img
           alt='Mountains'

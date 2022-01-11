@@ -6,7 +6,7 @@ export default async function handler (req, res) {
     if (error) {
       res.status(500).json({ error })
     } else {
-      res.status(200).json({ data })
+      res.status(200).json(data)
     }
   } else if (req.method === 'POST') {
     const { data, error } = await supabase.from('gallery').insert({
@@ -25,6 +25,6 @@ export default async function handler (req, res) {
 }
 
 const getGallery = async () => {
-  const { data, error } = await supabase.from('gallery').select('*').single()
+  const { data, error } = await supabase.from('gallery').select('*')
   return { data, error }
 }
