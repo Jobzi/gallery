@@ -1,16 +1,15 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import { Polaroid } from '../../components/Polaroid'
+import HeadSeo from '../../components/Seo'
+import { supabase } from '../../lib/supabaseClient'
 
-const fetcher = (url) => fetch(url).then((res) => res.json()).then(({ data }) => data)
+// const fetcher = (url) => fetch(url).then((res) => res.json()).then(({ data }) => data)
 
-export default function ShareGallery () {
-  const router = useRouter()
-  const { id } = router.query
-  const { data } = useSWR(`/api/gallery/${id}`, fetcher)
+export default function ShareGallery ({ data }) {
+  // const router = useRouter()
+  // const { id } = router.query
+  // const { data } = useSWR(`/api/gallery/${id}`, fetcher)
 
   // const [gallery, setGallery] = useState(null)
   // useEffect(() => {
@@ -25,10 +24,8 @@ export default function ShareGallery () {
 
   return (
     <>
-      <Head>
-        <title>YawGallery | Wish</title>
-      </Head>
-      <Link href='/' >
+      <HeadSeo section={data?.to}/>
+      <Link href='/' passHref>
         <div className='p-2 ml-4 absolute top-5'>
           <Image className='hover:scale-105 ' src="/wish.svg" alt="Vercel Logo" width={40} height={40}/>
         </div>
@@ -46,9 +43,25 @@ export default function ShareGallery () {
          ))}
          </div>
       </section>
-      <div className='absolute bottom-5 right-4'>
-        <h1 className='font-licorice text-3xl text-right'>To: {data?.to}</h1>
+      <div className='relative'>
+        <div className='absolute bottom-0 right-4'>
+          <h1 className='font-licorice text-3xl text-right'>To: {data?.to}</h1>
+        </div>
       </div>
     </>
   )
+}
+
+export async function getServerSideProps ({ params }) {
+  const { data, error } = await supabase.from('gallery').select('*').eq('id', params.id).single()
+
+  if (error) {
+    console.log('Aqui server un error', error.message)
+  }
+
+  return {
+    props: {
+      data
+    }
+  }
 }

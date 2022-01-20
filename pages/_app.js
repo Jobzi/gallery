@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from '../components/Header'
+import Layout from '../components/Layout'
 import { UserContext } from '../context/userContext'
 import '../styles/globals.css'
 
@@ -7,8 +7,9 @@ function MyApp ({ Component, pageProps }) {
   return (
   <>
     <UserContext>
-      <Header/>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </UserContext>
   </>
   )

@@ -1,12 +1,10 @@
-import Head from 'next/head'
 import { Polaroid } from '../../components/Polaroid'
+import HeadSeo from '../../components/Seo'
 
 export default function Gallery () {
   return (
     <>
-    <Head>
-        <title>YawGallery | Demo</title>
-    </Head>
+      <HeadSeo section='Demo'/>
       <div className='flex items-center justify-center'>
         {/* <img
           alt='Mountains'

@@ -1,14 +1,12 @@
-import Head from 'next/head'
 import { Footer } from '../components/Footer'
 import { Polaroid } from '../components/Polaroid'
+import HeadSeo from '../components/Seo'
 import styles from '../styles/Home.module.css'
 
 export default function Home () {
   return (
   <>
-    <Head>
-        <title>YawGallery | Home</title>
-    </Head>
+    <HeadSeo/>
     <div className={styles.container}>
       <section className='grid place-items-center h-screen'>
         <div className='flex flex-wrap'>

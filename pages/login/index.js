@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import React, { useState } from 'react'
+import HeadSeo from '../../components/Seo'
 import { useUser } from '../../hooks/useUser'
 export default function Login () {
   const [email, setEmail] = useState('')
@@ -14,9 +14,7 @@ export default function Login () {
 
   return (
     <>
-     <Head>
-        <title>YawGallery | Log in</title>
-    </Head>
+    <HeadSeo section='Log in'/>
       <div className="grid place-items-center h-screen">
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <div>

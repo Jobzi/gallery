@@ -7,11 +7,11 @@ import { useUser } from '../hooks/useUser'
 
 const LayoutNav = ({ children, route }) => {
   return (
-    <>
+    <div>
     {
         route !== '/gallery/[id]' ? children : null
     }
-    </>
+    </div>
   )
 }
 
@@ -28,14 +28,14 @@ export function Header () {
     return (
     <>
         <div>
-            <Link href='/'>
-                <a className="text-gray-800 dark:text-gray-200 border-b-2 border-pink-400 mx-1.5 sm:mx-6">home</a>
+            <Link href='/' passHref>
+                <a className="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6">home</a>
             </Link>
             {user &&
-                <Link href='/dashboard'>
+                <Link href='/dashboard' passHref>
                     <a className="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6 lowercase ">{user?.email}</a>
                 </Link> }
-            <Link href='/gallery'>
+            <Link href='/gallery' passHref>
                 <a className="border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6">Demo</a>
             </Link>
         </div>
@@ -44,7 +44,7 @@ export function Header () {
                 className="w-40 bg-slate-800 hover:bg-slate-500 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 flex items-center justify-center cursor-pointer"
                 onClick={handleSignOut}
             >Sign Out</a>
-          : <Link href='/login'>
+          : <Link href='/login' passHref>
             <a className="w-40 bg-slate-800 hover:bg-slate-500 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 flex items-center justify-center">login</a>
         </Link>}
     </>
@@ -58,7 +58,7 @@ export function Header () {
 
   return (
     <LayoutNav route={route}>
-        <nav className="bg-white dark:bg-gray-700 m-4 border rounded-lg">
+        <div className="bg-white dark:bg-gray-700 m-4 border rounded-lg">
             <div className="container p-2 mx-auto">
                 <div className="flex items-center justify-between text-gray-600 capitalize dark:text-gray-300">
                     <Link href='/'>
@@ -67,7 +67,8 @@ export function Header () {
                         </div>
                     </Link>
                     {isMobile
-                      ? <h1 className='border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6 cursor-pointer'>Wish Gallery</h1>
+
+                      ? <Link href={user ? '/dashboard' : '/'} passHref><h1 className='border-b-2 border-transparent hover:text-gray-800 dark:hover:text-gray-200 hover:border-pink-400 mx-1.5 sm:mx-6 cursor-pointer'>Wish Gallery</h1></Link>
                       : rederOptions(user) }
                    {isMobile &&
                    <button
@@ -79,7 +80,7 @@ export function Header () {
 
                 </div>
             </div>
-        </nav>
+        </div>
         {isOpen &&
             <nav className="sticky bg-white dark:bg-gray-700 ml-4 mr-4 mb-4 border rounded-lg ">
                 <div className="w-full p-6 mx-auto">
