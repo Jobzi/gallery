@@ -33,7 +33,7 @@ export default function ShareGallery ({ data }) {
       <div className='mt-8 flex items-center justify-center'>
           <h1
           className='text-4xl font-bold  text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-purple-300  font-licorice text-center'
-          > {data?.tittle}
+          > {data?.title}
           </h1>
       </div>
       <section className='grid place-items-center mb-5'>
