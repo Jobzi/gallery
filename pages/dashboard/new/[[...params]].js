@@ -1,93 +1,26 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
 import ImageToUpload from '../../../components/ImageUpload'
 import Modal from '../../../components/Modal'
-import { useUser } from '../../../hooks/useUser'
 import { supabase } from '../../../lib/supabaseClient'
 import { confirmAlert } from 'react-confirm-alert'
+import useNewGallery from '../../../hooks/useNewGallery'
 
-export default function NewGallery () {
-  const { user } = useUser()
-  const router = useRouter()
-  const { params } = router.query
-  // data to save
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [to, setTo] = useState('')
-  const [timeLine, setTimeLine] = useState([])
-  const [gallery, setGallery] = useState(null)
-
-  const [isEdited, setIsEdited] = useState(false)
-  // eslint-disable-next-line no-unused-vars
-  const [_, setSelectedFile] = useState()
-
-  useEffect(() => {
-    if (params) {
-      const [id] = params
-      fetch(`/api/gallery/${id}`).then(res => res.json()).then(data => {
-        const { data: gallery } = data
-        const { title, description, timeline, to } = gallery
-        // const images = timeline?.map(({ url }) => url)
-        setGallery(gallery)
-        setTitle(title)
-        setDescription(description)
-        setTo(to)
-        setTimeLine(timeline)
-        // setImages(images)
-        // console.log('data', images)
-        console.log('gallery of effect', gallery)
-      })
-    }
-  }, [params])
-
-  const onSelectFile = e => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined)
-    }
-
-    uplaodPhoto(e.target.files[0])
-      .then(url => {
-        setTimeLine((prev) => {
-          const newTimeLine = [...prev, { url, legend: '' }]
-          updateData(newTimeLine)
-          return newTimeLine
-        })
-      })
-  }
-
-  const uplaodPhoto = async (imageToUpload) => {
-    const URL = 'https://sbqspgtbzfgtyypagxbh.supabase.in/storage/v1/object/public/'
-    const { name, error } = imageToUpload
-    const { data } = await supabase.storage.from('gallery').upload(`${user.id}/${name}`, imageToUpload, {
-      cacheControl: '3600',
-      upsert: false
-    })
-    if (data) {
-      const { Key } = data
-      const FULL_URL = `${URL}${Key}`
-      return FULL_URL
-    } else if (error) {
-      throw new Error(error)
-    }
-  }
-
-  const updateData = async (newTimeLine) => {
-    const dataToSave = { title, description, timeline: newTimeLine ?? timeLine, to }
-    console.log('data to save', dataToSave)
-    const { data, error } = await supabase.from('gallery').update(dataToSave).match({ id: gallery.id })
-    setIsEdited(false)
-    console.log('response', data, error)
-  }
-
-  const removeImage = (index) => {
-    setTimeLine(async (prev) => {
-      const newTimeLine = [...prev]
-      newTimeLine.splice(index, 1)
-      // await updateData(newTimeLine)
-      return newTimeLine
-    })
-  }
+export default function NewGallery ({ data }) {
+  const {
+    title,
+    description,
+    to,
+    timeLine,
+    isEdited,
+    setTitle,
+    setDescription,
+    setTo,
+    setTimeLine,
+    setIsEdited,
+    onSelectFile,
+    removeImage,
+    updateData
+  } = useNewGallery(data)
 
   return (
     <>
@@ -189,7 +122,7 @@ export default function NewGallery () {
                                   description={'with legend: ' + data?.legend}
                                   handleClose={onClose}
                                   handleSave={() => {
-                                    removeImage()
+                                    removeImage(index)
                                     onClose()
                                   }}
                                 />
@@ -205,4 +138,23 @@ export default function NewGallery () {
         </div>
     </>
   )
+}
+
+export async function getServerSideProps ({ params }) {
+  const { params: ids } = params
+  if (typeof ids === 'undefined') {
+    return {
+      props: {
+        data: false
+      }
+    }
+  }
+  const { data, error } = await supabase.from('gallery').select('*').eq('id', ids[0]).single()
+  error && console.log(error)
+
+  return {
+    props: {
+      data: data
+    }
+  }
 }
