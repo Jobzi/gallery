@@ -4,6 +4,9 @@ import Modal from '../../../components/Modal'
 import { supabase } from '../../../lib/supabaseClient'
 import { confirmAlert } from 'react-confirm-alert'
 import useNewGallery from '../../../hooks/useNewGallery'
+import { FileUploader } from 'react-drag-drop-files'
+
+const fileTypes = ['JPG', 'PNG', 'JPEG', 'GIF']
 
 export default function NewGallery ({ data }) {
   const {
@@ -12,6 +15,7 @@ export default function NewGallery ({ data }) {
     to,
     timeLine,
     isEdited,
+    isNewGallery,
     setTitle,
     setDescription,
     setTo,
@@ -19,7 +23,8 @@ export default function NewGallery ({ data }) {
     setIsEdited,
     onSelectFile,
     removeImage,
-    updateData
+    updateData,
+    createGallery
   } = useNewGallery(data)
 
   return (
@@ -73,7 +78,13 @@ export default function NewGallery ({ data }) {
             <button
                 className="
                 text-white px-4 w-auto h-10 bg-purple-600 rounded-full hover:bg-purple-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-                onClick={() => updateData()}
+                onClick={() => {
+                  if (!isNewGallery) {
+                    createGallery()
+                  } else {
+                    updateData()
+                  }
+                }}
                 disabled={!isEdited}
               >
               <svg viewBox="0 0 20 20" enableBackground="new 0 0 20 20" className="w-6 h-6 inline-block mr-1">
@@ -86,23 +97,16 @@ export default function NewGallery ({ data }) {
         </div>
         <div className="bg-slate-100 mr-6  ml-6 p-6 rounded-md">
             <div>
-            <input
-              type="file"
-              disabled={true}
-              className="
-                mb-4
-                block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded file:border-0
-                file:text-sm file:font-semibold
-                file:bg-violet-500 file:text-violet-200
-                hover:file:bg-violet-100
-                hover:file:text-violet-500
-              "
-              name='file'
-              multiple={false}
-              onChange={onSelectFile}
-            />
+            <FileUploader
+              handleChange={onSelectFile}
+              name="file"
+              types={fileTypes}
+              disabled={!isNewGallery}
+              maxSize={4}
+              onSizeError={(err) => {
+                console.log(err)
+              }}
+              />
                 <div className='flex flex-wrap items-center'>
                   {timeLine?.map((data, index) => {
                     return (

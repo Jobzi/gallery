@@ -28,7 +28,7 @@ export default function Dashboard () {
               <li className='cursor-pointer'>
                 <div className='w-50 p-6 rounded-lg hover:bg-violet-400 hover:ring-violet-400 hover:shadow-md group bg-white ring-1 ring-gray-200 shadow-sm'>
                 <h1 className="group-hover:text-white font-semibold text-gray-900">
-                  {gallery?.tittle}
+                  {gallery?.title}
                 </h1>
                 <p className="group-hover:text-violet-200">{gallery?.description}</p>
                 </div>

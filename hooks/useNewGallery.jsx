@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { useUser } from './useUser'
+import { useRouter } from 'next/router'
+
+const SUPABASE_URL = 'https://sbqspgtbzfgtyypagxbh.supabase.in/storage/v1/object/public/'
 
 export default function useNewGallery (data) {
+  const router = useRouter()
   const { title: titleProp, description: descriptionProp, timeline: timelineProps, to: toProps } = data
   // data to save
   const { user } = useUser()
+  const [isNewGallery, setIsNewGallery] = useState(Boolean(data))
   const [title, setTitle] = useState(() => titleProp ?? '')
   const [description, setDescription] = useState(() => descriptionProp ?? '')
   const [to, setTo] = useState(() => toProps ?? '')
@@ -16,34 +21,31 @@ export default function useNewGallery (data) {
   // eslint-disable-next-line no-unused-vars
   const [_, setSelectedFile] = useState()
 
-  const onSelectFile = e => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined)
-    }
-
-    uplaodPhoto(e.target.files[0])
+  const onSelectFile = file => {
+    uplaodPhoto(file)
       .then(url => {
         setTimeLine((prev) => {
           const newTimeLine = [...prev, { url, legend: '' }]
           updateData(newTimeLine)
           return newTimeLine
         })
+      }).catch(err => {
+        console.warn(err)
       })
   }
 
   const uplaodPhoto = async (imageToUpload) => {
-    const URL = 'https://sbqspgtbzfgtyypagxbh.supabase.in/storage/v1/object/public/'
-    const { name, error } = imageToUpload
-    const { data } = await supabase.storage.from('gallery').upload(`${user.id}/${name}`, imageToUpload, {
+    const { name } = imageToUpload
+    const { data, error: errorSupabase } = await supabase.storage.from('gallery').upload(`${user.id}/${name}`, imageToUpload, {
       cacheControl: '3600',
       upsert: false
     })
     if (data) {
       const { Key } = data
-      const FULL_URL = `${URL}${Key}`
+      const FULL_URL = `${SUPABASE_URL}${Key}`
       return FULL_URL
-    } else if (error) {
-      throw new Error(error)
+    } else if (errorSupabase) {
+      throw new Error(errorSupabase)
     }
   }
 
@@ -55,13 +57,25 @@ export default function useNewGallery (data) {
     console.log('response', data, error)
   }
 
+  const createGallery = async () => {
+    const dataToSave = { title, description, to, userUUID: user.id }
+    const { data, error } = await supabase.from('gallery').insert(dataToSave)
+    if (data) {
+      const newValue = data[0]
+      setGallery(newValue)
+      setIsNewGallery(!false)
+      router.push(`/dashboard/new/${newValue.id}`)
+    }
+    console.warn('Error', error)
+  }
+
   const removeImage = async (index) => {
     setTimeLine((prev) => {
       const newTimeLine = [...prev]
       newTimeLine.splice(index, 1)
+      updateData(newTimeLine)
       return newTimeLine
     })
-    // await updateData(newTimeLine)
   }
 
   return {
@@ -71,6 +85,7 @@ export default function useNewGallery (data) {
     timeLine,
     gallery,
     isEdited,
+    isNewGallery,
     setTitle,
     setDescription,
     setTo,
@@ -79,6 +94,8 @@ export default function useNewGallery (data) {
     setIsEdited,
     onSelectFile,
     removeImage,
-    updateData
+    updateData,
+    setIsNewGallery,
+    createGallery
   }
 }
