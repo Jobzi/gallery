@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -7,6 +8,7 @@ import GalleryCard from '../../components/GalleryCard'
 import Modal from '../../components/Modal'
 import HeadSeo from '../../components/Seo'
 import { useUser } from '../../hooks/useUser'
+import { varsLanding } from '../../styles/variants'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -37,11 +39,15 @@ export default function Dashboard () {
     <>
       <HeadSeo section='Create New Gallery'/>
       <section>
-        <ul className="bg-slate-100  p-4 m-5 rounded sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
-          {data && data.map((gallery) => (
+        <motion.ul
+          className="bg-slate-100  p-4 m-5 rounded sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6"
+          initial="initial" animate="animate" exit="exit" variants={varsLanding}
+          >
+          {data && data.map((gallery, index) => (
             <GalleryCard
               key={gallery.id}
               gallery={gallery}
+              index={index}
               handleClick={() => {
                 confirmAlert({
                   customUI: ({ onClose }) => {
@@ -74,7 +80,7 @@ export default function Dashboard () {
               </a>
             </li>
           </Link>
-        </ul>
+        </motion.ul>
       </section>
     </>)
 }

@@ -1,11 +1,15 @@
+import { motion } from 'framer-motion'
 import { Polaroid } from '../../components/Polaroid'
 import HeadSeo from '../../components/Seo'
+import { fadeAnimation } from '../../styles/variants'
 
 export default function Gallery () {
   return (
     <>
       <HeadSeo section='Demo'/>
-      <div className='flex items-center justify-center'>
+      <motion.div
+        initial="initial" animate="animate" variants={fadeAnimation}
+        className='flex items-center justify-center'>
         {/* <img
           alt='Mountains'
           className='w-screen h-40 rounded shadow-2xl grayscale '
@@ -17,7 +21,7 @@ export default function Gallery () {
           //  style={{ position: 'absolute' }}
           > Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..
           </h1>
-      </div>
+      </motion.div>
       <section className='grid place-items-center mt-4 mb-5'>
         <div className='flex flex-wrap'>
           <Polaroid src={'https://image.ibb.co/b8UJBc/administration_architecture_big_ben_221166.jpg'} alt={'img 1'} width={'30'}/>

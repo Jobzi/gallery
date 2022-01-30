@@ -1,8 +1,13 @@
+import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { varsCard } from '../styles/variants'
 
-export default function GalleryCard ({ gallery, handleClick }) {
+export default function GalleryCard ({ gallery, handleClick, index }) {
   return (
-    <div className='relative'>
+    <motion.div
+      className='relative'
+      custom={index} initial='initial' animate='animate' exit='exit' variants={varsCard}
+      >
         <span className="absolute top-1 right-1">
         <button className="bg-red-500 rounded-full hover:bg-red-400" onClick={handleClick}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" className="bi bi-x" viewBox="0 0 16 16">
@@ -22,6 +27,6 @@ export default function GalleryCard ({ gallery, handleClick }) {
             </div>
         </li>
         </Link>
-    </div>
+    </motion.div>
   )
 }

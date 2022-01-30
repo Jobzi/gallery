@@ -1,8 +1,10 @@
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Polaroid } from '../../components/Polaroid'
 import HeadSeo from '../../components/Seo'
 import { supabase } from '../../lib/supabaseClient'
+import { fadeAnimation } from '../../styles/variants'
 
 // const fetcher = (url) => fetch(url).then((res) => res.json()).then(({ data }) => data)
 
@@ -23,7 +25,8 @@ export default function ShareGallery ({ data }) {
   // }, [id])
 
   return (
-    <>
+    <motion.section
+      initial="initial" animate="animate" variants={fadeAnimation}>
       <HeadSeo section={data?.to}/>
       <Link href='/' passHref>
         <div className='p-2 ml-4 absolute top-5'>
@@ -48,7 +51,7 @@ export default function ShareGallery ({ data }) {
           <h1 className='font-licorice text-3xl text-right'>To: {data?.to}</h1>
         </div>
       </div>
-    </>
+    </motion.section>
   )
 }
 

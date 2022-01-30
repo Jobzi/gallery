@@ -1,13 +1,18 @@
+import { motion } from 'framer-motion'
 import { Footer } from '../components/Footer'
 import { Polaroid } from '../components/Polaroid'
 import HeadSeo from '../components/Seo'
 import styles from '../styles/Home.module.css'
+import { varsLanding } from '../styles/variants'
 
 export default function Home () {
   return (
   <>
     <HeadSeo/>
-    <div className={styles.container}>
+    <motion.div
+      className={styles.container}
+      initial="initial" animate="animate" exit="exit" variants={varsLanding}
+    >
       <section className='grid place-items-center h-screen'>
         <div className='flex flex-wrap'>
           <div className='m-4 sm:w-2/5 md:w-3/5 lg:w-1/2'>
@@ -29,7 +34,7 @@ Sed accumsan sodales lectus. Aenean sodales vel mauris elementum tempus.
         </div>
       </section>
       <Footer/>
-    </div>
+    </motion.div>
   </>
   )
 }

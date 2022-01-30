@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import HeadSeo from '../../components/Seo'
 import { useUser } from '../../hooks/useUser'
+import { varsForm } from '../../styles/variants'
 export default function Login () {
   const [email, setEmail] = useState('')
   const [userName, setUserName] = useState('')
@@ -15,7 +17,10 @@ export default function Login () {
   return (
     <>
     <HeadSeo section='Log in'/>
-      <div className="grid place-items-center h-screen">
+      <motion.div
+        className="grid place-items-center h-screen"
+        initial="initial" animate="animate" exit="exit" variants={varsForm}
+      >
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           <div>
           <form className="bg-white" onSubmit={handleSubmit}>
@@ -74,7 +79,7 @@ export default function Login () {
           <span className="text-sm ml-2 hover:text-red-500 cursor-pointer">Forgot Password ?</span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   )
 }
