@@ -2,9 +2,9 @@ import { Header } from './Header'
 
 export default function Layout ({ children }) {
   return (
-      <>
-        <Header />
-        <main>{children}</main>
-      </>
+    <>
+      <Header />
+      <main>{children}</main>
+    </>
   )
 }

@@ -11,6 +11,6 @@ export default async function handler (req, res) {
 }
 
 const getGallery = async (id) => {
-  const { data, error } = await supabase.from('gallery').select('*').eq('userUUID', id)
+  const { data, error } = await supabase.from('gallery').select('*').eq('userUUID', id).eq('isDeleted', false)
   return { data, error }
 }

@@ -99,6 +99,7 @@ export default function NewGallery ({ data }) {
             <div>
             <FileUploader
               handleChange={onSelectFile}
+              label="Upload Images"
               name="file"
               types={fileTypes}
               disabled={!isNewGallery}

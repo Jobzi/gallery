@@ -1,39 +1,67 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import useSWR from 'swr'
+import { confirmAlert } from 'react-confirm-alert'
+import useSWR, { useSWRConfig } from 'swr'
+import GalleryCard from '../../components/GalleryCard'
+import Modal from '../../components/Modal'
 import HeadSeo from '../../components/Seo'
 import { useUser } from '../../hooks/useUser'
 
-const fetcher = (url) => fetch(url).then((res) => res.json())
+const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export default function Dashboard () {
   const { user } = useUser()
   const router = useRouter()
-  const { data } = useSWR(`/api/gallery/user/${user?.id}`, fetcher)
+  const { mutate } = useSWRConfig()
+  const { data } = useSWR(`/api/dashboard/user/${user?.id}`, fetcher)
   useEffect(() => {
     if (!user) {
       router.push('/')
     }
   }, [user, router])
+  console.log(data)
+  const deleteGallery = (id) => {
+    const newData = data.filter(item => item.id !== id)
+    fetch(`/api/dashboard/delete/${id}`).then(() => {
+      console.log('deleted')
+      mutate(
+        `/api/dashboard/user/${user?.id}`,
+        newData,
+        false
+      )
+    }
+    )
+  }
   return (
     <>
       <HeadSeo section='Create New Gallery'/>
       <section>
         <ul className="bg-slate-100  p-4 m-5 rounded sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
           {data && data.map((gallery) => (
-            <Link key={gallery.id}
-              href={`/dashboard/new/${gallery.id}`} passHref
-            >
-              <li className='cursor-pointer'>
-                <div className='w-50 p-6 rounded-lg hover:bg-violet-400 hover:ring-violet-400 hover:shadow-md group bg-white ring-1 ring-gray-200 shadow-sm'>
-                <h1 className="group-hover:text-white font-semibold text-gray-900">
-                  {gallery?.title}
-                </h1>
-                <p className="group-hover:text-violet-200">{gallery?.description}</p>
-                </div>
-              </li>
-            </Link>
+            <GalleryCard
+              key={gallery.id}
+              gallery={gallery}
+              handleClick={() => {
+                confirmAlert({
+                  customUI: ({ onClose }) => {
+                    return (
+                      <Modal
+                        key={gallery.id}
+                        title='Alert you want to delete this Gallery?'
+                        description={gallery.title}
+                        labelToSave='Delete'
+                        handleClose={onClose}
+                        handleSave={() => {
+                          deleteGallery(gallery.id)
+                          onClose()
+                        }}
+                      />
+                    )
+                  }
+                })
+              }}
+            />
           )
           )}
           <Link href='/dashboard/new'>
