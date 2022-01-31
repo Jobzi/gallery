@@ -36,7 +36,10 @@ export default function useNewGallery (data) {
 
   const uplaodPhoto = async (imageToUpload) => {
     const { name } = imageToUpload
-    const { data, error: errorSupabase } = await supabase.storage.from('gallery').upload(`${user.id}/${name}`, imageToUpload, {
+    const splitName = name.split('.')
+    const extension = splitName[splitName.length - 1]
+    const fileName = `${Date.now()}.${extension}`
+    const { data, error: errorSupabase } = await supabase.storage.from('gallery').upload(`${user.id}/${fileName}`, imageToUpload, {
       cacheControl: '3600',
       upsert: false
     })
