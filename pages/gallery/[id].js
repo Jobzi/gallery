@@ -43,7 +43,7 @@ export default function ShareGallery ({ data }) {
         <div className='flex flex-wrap'>
          {data?.timeline.map(({ url, legend }) => (
           <Polaroid key={url} src={url} alt={legend} legend={legend} width={'30'}/>
-         ))}
+         )).reverse()}
          </div>
       </section>
       <div className='relative'>
