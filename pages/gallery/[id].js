@@ -27,7 +27,7 @@ export default function ShareGallery ({ data }) {
   return (
     <motion.section
       initial="initial" animate="animate" variants={fadeAnimation}>
-      <HeadSeo section={data?.to}/>
+      <HeadSeo section={data?.to} description={data?.description}/>
       <Link href='/' passHref>
         <div className='p-2 ml-4 absolute top-5'>
           <Image className='hover:scale-105 ' src="/wish.svg" alt="Vercel Logo" width={40} height={40}/>
