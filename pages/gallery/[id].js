@@ -5,6 +5,8 @@ import { Polaroid } from '../../components/Polaroid'
 import HeadSeo from '../../components/Seo'
 import { supabase } from '../../lib/supabaseClient'
 import { fadeAnimation } from '../../styles/variants'
+import AudioPlayer from 'react-h5-audio-player'
+import 'react-h5-audio-player/lib/styles.css'
 
 // const fetcher = (url) => fetch(url).then((res) => res.json()).then(({ data }) => data)
 
@@ -51,6 +53,15 @@ export default function ShareGallery ({ data }) {
           <h1 className='font-licorice text-3xl text-right'>To: {data?.to}</h1>
         </div>
       </div>
+      {data?.cover && (
+          <AudioPlayer
+            autoPlay
+            src={data?.cover}
+            customAdditionalControls={[]}
+            showJumpControls={false}
+            volume={0.2}
+          />
+      )}
     </motion.section>
   )
 }
